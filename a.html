@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Carousel Slide</title>
+    <style>
+        .carousel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 100px auto;
+            perspective: 1000px;
+        }
+
+        .carousel {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .carousel .card {
+            width: 80px;
+            height: 120px;
+            background: lightcoral;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+            transform-style: preserve-3d;
+            text-align: center;
+            line-height: 120px;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
+        .button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: lightseagreen;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel" id="carousel">
+            <div class="card" style="transform: rotateY(0deg) translateZ(150px);">1</div>
+            <div class="card" style="transform: rotateY(72deg) translateZ(150px);">2</div>
+            <div class="card" style="transform: rotateY(144deg) translateZ(150px);">3</div>
+            <div class="card" style="transform: rotateY(216deg) translateZ(150px);">4</div>
+            <div class="card" style="transform: rotateY(288deg) translateZ(150px);">5</div>
+        </div>
+    </div>
+    <button class="button" id="spinButton">Spin</button>
+
+    <script>
+        const carousel = document.getElementById('carousel');
+        const spinButton = document.getElementById('spinButton');
+        let currentRotation = 0;
+
+        spinButton.addEventListener('click', () => {
+            const randomAngle = Math.floor(Math.random() * 360);
+            const anglePerCard = 72; // 360 / 5 cards
+            const extraRotation = anglePerCard * Math.floor(Math.random() * 5);
+            const totalRotation = 3600 + randomAngle + extraRotation; // 10 full rotations + random + align to a card
+
+            currentRotation += totalRotation;
+            carousel.style.transform = `rotateY(${currentRotation}deg)`;
+        });
+    </script>
+</body>
+</html>
